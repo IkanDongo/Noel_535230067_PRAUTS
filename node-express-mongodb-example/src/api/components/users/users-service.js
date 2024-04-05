@@ -86,6 +86,19 @@ async function updateUser(id, name, email) {
 }
 
 /**
+ * Check duplicate email
+ * @param {string} email - Email
+ */
+async function DupEmail(email) {
+  try {
+    await usersRepository.DupEmail(email);
+  } catch (err) {
+    return null;
+  }
+  return email;
+}
+
+/**
  * Delete user
  * @param {string} id - User ID
  * @returns {boolean}
@@ -112,5 +125,6 @@ module.exports = {
   getUser,
   createUser,
   updateUser,
+  DupEmail,
   deleteUser,
 };

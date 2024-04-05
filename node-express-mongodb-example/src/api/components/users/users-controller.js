@@ -59,6 +59,13 @@ async function createUser(request, response, next) {
       );
     }
 
+    const berhasil = await usersService.DupEmail(email);
+    if (!berhasil) {
+      throw errorResponder(
+        errorTypes.EMAIL_ALREADY_TAKEN,
+        'Email is already taken'
+      );
+    }
     return response.status(200).json({ name, email });
   } catch (error) {
     return next(error);

@@ -54,6 +54,17 @@ async function updateUser(id, name, email) {
 }
 
 /**
+ * Check duplicate email
+ * @param {string} email - Email
+ */
+async function DupEmail(email) {
+  const User = await User.findOne({ email: email });
+  if (User) return null;
+  else {
+    return email;
+  }
+}
+/**
  * Delete a user
  * @param {string} id - User ID
  * @returns {Promise}
@@ -67,5 +78,6 @@ module.exports = {
   getUser,
   createUser,
   updateUser,
+  DupEmail,
   deleteUser,
 };

@@ -1,0 +1,23 @@
+meta {
+  name: error if email the same
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/api/users
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwidXNlcklkIjoiNjYwZjdhMTA3OTJiZjU5NTE1NmZkMTZkIiwiaWF0IjoxNzEyMjk3NTUxLCJleHAiOjE3MTIzODM5NTF9.JQTZzAe2Y0VJJ1UfZshcH9Nxkq8Ywixqxk3Be7dxu5g
+}
+
+body:json {
+  {
+    "name":"udonnn",
+    "email": "udonnn@example.com",
+    "password": "1234567891"
+  }
+}
