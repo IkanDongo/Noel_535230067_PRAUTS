@@ -54,23 +54,21 @@ async function updateUser(id, name, email) {
 }
 
 /**
- * Check duplicate email
- * @param {string} email - Email
- */
-async function DupEmail(email) {
-  const User = await User.findOne({ email: email });
-  if (User) return null;
-  else {
-    return email;
-  }
-}
-/**
  * Delete a user
  * @param {string} id - User ID
  * @returns {Promise}
  */
 async function deleteUser(id) {
   return User.deleteOne({ _id: id });
+}
+
+/**
+ * Check duplicate email
+ * @param {string} email - Email
+ * @returns {Promise}
+ */
+async function DupEmail(email) {
+  return User.findOne({ email: email });
 }
 
 module.exports = {

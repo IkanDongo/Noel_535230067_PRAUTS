@@ -42,6 +42,24 @@ async function getUser(id) {
 }
 
 /**
+ * Check duplicate email
+ * @param {string} email - Email
+ * @returns {boolean}
+ */
+async function DupEmail(email) {
+  const user = await usersRepository.DupEmail(email);
+  if (user) {
+    return null;
+  }
+  try {
+    await usersRepository.DupEmail(email);
+  } catch (err) {
+    return email;
+  }
+  return true;
+}
+
+/**
  * Create new user
  * @param {string} name - Name
  * @param {string} email - Email
@@ -83,19 +101,6 @@ async function updateUser(id, name, email) {
   }
 
   return true;
-}
-
-/**
- * Check duplicate email
- * @param {string} email - Email
- */
-async function DupEmail(email) {
-  try {
-    await usersRepository.DupEmail(email);
-  } catch (err) {
-    return null;
-  }
-  return email;
 }
 
 /**
