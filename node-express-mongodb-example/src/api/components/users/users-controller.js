@@ -86,7 +86,7 @@ async function updateUser(request, response, next) {
     const email = request.body.email;
 
     const berhasil = await usersService.DupEmail(email);
-    if (berhasil) {
+    if (!berhasil) {
       throw errorResponder(
         errorTypes.EMAIL_ALREADY_TAKEN,
         'Email is already taken'
