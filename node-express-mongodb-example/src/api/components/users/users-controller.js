@@ -129,11 +129,11 @@ async function changePassword(request, response, next) {
     const id = request.params.id;
     const password = request.body.password;
     const new_password = request.body.new_password;
-    const new_confirm_password = request.body.confirm_password
+    const new_confirm_password = request.body.new_confirm_password;
 
     const success = await usersService.changePassword(id ,password, new_password, new_confirm_password);
-
-    if (password === new_password) {
+  
+    if (password == new_password) {
       throw errorResponder(
         errorTypes.INVALID_PASSWORD,
         'the password and new_password are the same (please change the new_password)'
@@ -148,12 +148,12 @@ async function changePassword(request, response, next) {
     if (!success) {
       throw errorResponder(
         errorTypes.UNPROCESSABLE_ENTITY,
-        'Failed to update user'
+        'Failed to change password user'
       );
     }
 
 
-    return response.status(200).json({ id});
+    return response.status(200).json({id, password, new_password});
   } catch (error) {
     return next(error);
   }
