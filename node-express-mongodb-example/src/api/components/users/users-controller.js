@@ -102,7 +102,7 @@ async function updateUser(request, response, next) {
         'Email is already taken'
       );
     }
-
+    
     const success = await usersService.updateUser(id, name, email);
     if (!success) {
       throw errorResponder(
@@ -116,6 +116,49 @@ async function updateUser(request, response, next) {
     return next(error);
   }
 }
+
+/**
+ * Handle change user password
+ * @param {object} request - Express request object
+ * @param {object} response - Express response object
+ * @param {object} next - Express route middlewares
+ * @returns {object} Response object or pass an error to the next route
+ */
+async function changePassword(request, response, next) {
+  try {
+    const id = request.params.id;
+    const password = request.body.password;
+    const new_password = request.body.new_password;
+    const new_confirm_password = request.body.confirm_password
+
+    const success = await usersService.changePassword(id ,password, new_password, new_confirm_password);
+
+    if (password === new_password) {
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'the password and new_password are the same (please change the new_password)'
+      );
+    }
+    if (new_password !== new_confirm_password) {
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'the new password doesnt match (please check new_confirm_password)'
+      );
+    }
+    if (!success) {
+      throw errorResponder(
+        errorTypes.UNPROCESSABLE_ENTITY,
+        'Failed to update user'
+      );
+    }
+
+
+    return response.status(200).json({ id, new_password });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 
 /**
  * Handle delete user request
@@ -148,4 +191,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  changePassword,
 };

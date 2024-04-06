@@ -97,5 +97,5 @@ module.exports = {
   updateUser,
   DupEmail,
   deleteUser,
-  changePassword,
+  changePassword
 };
