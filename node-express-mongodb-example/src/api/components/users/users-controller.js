@@ -153,7 +153,7 @@ async function changePassword(request, response, next) {
     }
 
 
-    return response.status(200).json({ id, new_password });
+    return response.status(200).json({ id});
   } catch (error) {
     return next(error);
   }
