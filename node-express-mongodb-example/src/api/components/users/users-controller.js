@@ -50,15 +50,25 @@ async function createUser(request, response, next) {
     const name = request.body.name;
     const email = request.body.email;
     const password = request.body.password;
+    const confirm_password = request.body.confirm_password
 
-    const berhasil = await usersService.DupEmail(email);
+    const berhasil = await usersService.DupEmail(email, password, confirm_password);
     if (!berhasil) {
       throw errorResponder(
         errorTypes.EMAIL_ALREADY_TAKEN,
         'Email is already taken'
       );
     }
+
+    if (password !== confirm_password) {
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'Password doesnt match (please input the correct confirm_password)'
+      );
+    }
+
     const success = await usersService.createUser(name, email, password);
+
     if (!success) {
       throw errorResponder(
         errorTypes.UNPROCESSABLE_ENTITY,
