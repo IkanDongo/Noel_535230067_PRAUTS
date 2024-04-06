@@ -71,6 +71,25 @@ async function DupEmail(email) {
   return User.findOne({ email: email });
 }
 
+/**
+ * Change password
+ * @param {string} id - User ID
+ * @param {string} password -password
+ * @returns {Promise}
+ */
+async function changePassword(id, password) {
+  return User.updateOne(
+    {
+      _id: id,
+    },
+    {
+      $set: {
+        password,
+      },
+    }
+  );
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -78,4 +97,5 @@ module.exports = {
   updateUser,
   DupEmail,
   deleteUser,
+  changePassword,
 };
