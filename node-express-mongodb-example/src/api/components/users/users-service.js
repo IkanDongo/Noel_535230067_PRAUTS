@@ -129,17 +129,17 @@ async function deleteUser(id) {
 /**
  * Change password
  * @param {string} id - User ID
- * @param {string} password -password
+ * @param {string} old_password -old password
  * @param {string} new_password -hashed password
  * @returns {boolean}
  */
-async function changePassword(id, password, new_password) {
+async function changePassword(id, old_password, new_password) {
   const hashedPassword = await hashPassword(new_password);
   const userPass=  await usersRepository.getUser(id);
   if (!userPass) {
     return null;
   }
-  const oldPass = await passwordMatched (password, userPass.password);
+  const oldPass = await passwordMatched (old_password, userPass.password);
   if (!oldPass) {
     return null;
   }
